@@ -1,0 +1,40 @@
+<header class="header" [class.header--scrolled]="isScrolled">
+  <div class="header__container naka-container">
+    <a class="header__logo" (click)="scrollToSection('home')">
+      NAKA<span>_</span>
+    </a>
+
+    <nav class="header__nav" [class.header__nav--open]="isMenuOpen">
+      <ul class="header__menu">
+        <li class="header__item">
+          <a class="header__link" (click)="scrollToSection('about')">SOBRE</a>
+        </li>
+        <li class="header__item">
+          <a class="header__link" (click)="scrollToSection('features')">DESTAQUES</a>
+        </li>
+        <li class="header__item">
+          <a class="header__link" (click)="scrollToSection('gallery')">GALERIA</a>
+        </li>
+        <li class="header__item">
+          <a class="header__link" (click)="scrollToSection('contact')">CONTATO</a>
+        </li>
+      </ul>
+      <a href="https://api.whatsapp.com/send?phone=5511942048243&text=Ol%C3%A1%2C%20gostaria%20de%20fazer%20uma%20reserva%20no%20Naka_Restaurante!" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         class="naka-btn naka-btn--primary header__btn">
+        RESERVA
+      </a>
+    </nav>
+
+    <button class="header__toggle" 
+            [class.header__toggle--active]="isMenuOpen" 
+            (click)="toggleMenu()" 
+            aria-label="Toggle menu">
+      <span class="header__toggle-line"></span>
+      <span class="header__toggle-line"></span>
+      <span class="header__toggle-line"></span>
+    </button>
+  </div>
+</header>
+<div class="header__overlay" [class.header__overlay--active]="isMenuOpen" (click)="closeMenu()"></div>

@@ -1,0 +1,33 @@
+<section id="home" class="hero">
+  <div class="hero__background"></div>
+  <div class="hero__overlay"></div>
+  
+  <div class="hero__container naka-container">
+    <div class="hero__content" #heroContent>
+      <div class="hero__badge">Experiência Gastronômica</div>
+      <h1 class="hero__title">Bem-vindo ao <span>Naka</span></h1>
+      <p class="hero__subtitle">
+        Tradição renovada, excelência elevada. Uma jornada de sabores 
+        que une a essência da culinária japonesa com toques contemporâneos.
+      </p>
+      
+      <div class="hero__actions">
+        <a href="https://api.whatsapp.com/send?phone=5511942048243&text=Ol%C3%A1%2C%20gostaria%20de%20fazer%20uma%20reserva%20no%20Naka_Restaurante!" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="naka-btn naka-btn--primary">
+          FAÇA SUA RESERVA
+        </a>
+        <button (click)="scrollToMenu()" class="naka-btn naka-btn--outline">
+          CONHEÇA NOSSO CARDÁPIO
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="hero__scroll-indicator">
+    <div class="hero__mouse">
+      <div class="hero__wheel"></div>
+    </div>
+  </div>
+</section>

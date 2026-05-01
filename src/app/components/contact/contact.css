@@ -1,0 +1,144 @@
+.contact {
+  background-color: var(--naka-bg);
+  position: relative;
+}
+
+.contact::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: radial-gradient(circle at 100% 50%, rgba(201, 169, 97, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.contact__wrapper {
+  display: flex;
+  background-color: var(--naka-bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--naka-border);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.contact__wrapper.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.contact__content {
+  flex: 1;
+  padding: var(--space-3xl);
+}
+
+.contact__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  color: var(--naka-white);
+  margin-bottom: var(--space-sm);
+}
+
+.contact__title span {
+  color: var(--naka-secondary);
+}
+
+.contact__subtitle {
+  color: var(--naka-text-muted);
+  margin-bottom: var(--space-2xl);
+  font-size: 1.05rem;
+  max-width: 90%;
+}
+
+.contact__info-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.contact__info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.contact__icon {
+  width: 24px;
+  height: 24px;
+  color: var(--naka-secondary);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.contact__label {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--naka-white);
+  margin-bottom: 4px;
+}
+
+.contact__value {
+  color: var(--naka-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.contact__action {
+  flex: 0 0 400px;
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(15, 15, 26, 0.9)), url('/images/gallery-interior.png');
+  background-size: cover;
+  background-position: center;
+  padding: var(--space-3xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid var(--naka-border);
+}
+
+.contact__card {
+  background: rgba(15, 15, 26, 0.8);
+  backdrop-filter: blur(10px);
+  padding: var(--space-2xl);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--naka-border);
+  text-align: center;
+}
+
+.contact__card-title {
+  font-family: var(--font-heading);
+  color: var(--naka-secondary);
+  font-size: 1.5rem;
+  margin-bottom: var(--space-sm);
+}
+
+.contact__card-text {
+  color: var(--naka-text);
+  font-size: 0.95rem;
+  margin-bottom: var(--space-xl);
+}
+
+.contact__btn {
+  width: 100%;
+}
+
+@media (max-width: 991px) {
+  .contact__wrapper {
+    flex-direction: column;
+  }
+  
+  .contact__action {
+    flex: auto;
+    border-left: none;
+    border-top: 1px solid var(--naka-border);
+  }
+}
+
+@media (max-width: 576px) {
+  .contact__content, .contact__action {
+    padding: var(--space-xl);
+  }
+}
