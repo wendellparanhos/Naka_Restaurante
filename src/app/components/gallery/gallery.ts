@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,41 +9,75 @@ import { CommonModule } from '@angular/common';
   styleUrl: './gallery.css'
 })
 export class Gallery implements AfterViewInit {
-  @ViewChild('gallerySection') gallerySection!: ElementRef;
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
   images = [
-    { src: '/images/gallery-sushi.png', alt: 'Premium Sushi Platter', title: 'Sushi Selection' },
-    { src: '/images/gallery-wagyu.png', alt: 'Wagyu Beef Steak', title: 'Wagyu Premium' },
-    { src: '/images/gallery-ramen.png', alt: 'Tonkotsu Ramen', title: 'Tonkotsu Ramen' },
-    { src: '/images/gallery-interior.png', alt: 'Restaurant Interior', title: 'Ambiente' }
+    'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=1200',
+    'https://images.unsplash.com/photo-1617196034183-421b4917c92d?q=80&w=1200',
+    'https://images.unsplash.com/photo-1558985250-27a406d64cb3?q=80&w=1200',
+    'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=1200',
+    'https://images.unsplash.com/photo-1581184953963-d15971588569?q=80&w=1200'
   ];
 
-  lightboxImage: any = null;
+  isLightboxOpen = false;
+  activeIndex = 0;
+  currentIndex = 0; // For lightbox
 
-  ngAfterViewInit() {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = this.gallerySection.nativeElement.querySelectorAll('.gallery__item');
-    elements.forEach((el: Element) => observer.observe(el));
+  get currentImage(): string {
+    return this.images[this.currentIndex];
   }
 
-  openLightbox(image: any) {
-    this.lightboxImage = image;
+  openLightbox(index: number) {
+    if (index !== this.activeIndex) return; // Only allow opening the active centered item
+    this.currentIndex = index;
+    this.isLightboxOpen = true;
     document.body.style.overflow = 'hidden';
   }
 
   closeLightbox() {
-    this.lightboxImage = null;
-    document.body.style.overflow = '';
+    this.isLightboxOpen = false;
+    document.body.style.overflow = 'auto';
+  }
+
+  prevImage() {
+    this.currentIndex = (this.currentIndex > 0) ? this.currentIndex - 1 : this.images.length - 1;
+  }
+
+  nextImage() {
+    this.currentIndex = (this.currentIndex < this.images.length - 1) ? this.currentIndex + 1 : 0;
+  }
+
+  ngAfterViewInit() {
+    if (this.scrollContainer) {
+      this.scrollContainer.nativeElement.addEventListener('scroll', () => {
+        this.updateActiveIndex();
+      });
+      // Initialize
+      this.updateActiveIndex();
+    }
+  }
+
+  updateActiveIndex() {
+    const container = this.scrollContainer.nativeElement;
+    const scrollLeft = container.scrollLeft;
+    const centerPoint = scrollLeft + (container.clientWidth / 2);
+    
+    const items = container.querySelectorAll('.gallery__item');
+    let closestIndex = 0;
+    let minDistance = Infinity;
+
+    items.forEach((item: HTMLElement, index: number) => {
+      const itemCenter = item.offsetLeft + (item.clientWidth / 2);
+      const distance = Math.abs(centerPoint - itemCenter);
+      
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    if (this.activeIndex !== closestIndex) {
+      this.activeIndex = closestIndex;
+    }
   }
 }

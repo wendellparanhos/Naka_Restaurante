@@ -1,95 +1,121 @@
-.features {
-  background-color: var(--naka-bg);
+.ingredients {
   position: relative;
-}
-
-.features__header {
-  text-align: center;
-  margin-bottom: var(--space-3xl);
-}
-
-.features__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-xl);
-}
-
-.feature-card {
-  background-color: var(--naka-bg-card);
-  padding: var(--space-xl) var(--space-lg);
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  text-align: center;
-  transition: all var(--transition-base);
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.feature-card.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.feature-card:hover {
-  transform: translateY(-10px);
-  border-color: var(--naka-border);
-  box-shadow: var(--shadow-lg);
-  background: linear-gradient(145deg, var(--naka-bg-card), #22223b);
-}
-
-.feature-card__icon-wrapper {
-  width: 70px;
-  height: 70px;
-  margin: 0 auto var(--space-md);
-  background-color: rgba(201, 169, 97, 0.1);
-  border-radius: 50%;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition-base);
+  background-color: var(--naka-bg);
+  overflow: hidden;
 }
 
-.feature-card:hover .feature-card__icon-wrapper {
-  background-color: var(--naka-secondary);
-  box-shadow: 0 0 20px rgba(201, 169, 97, 0.4);
+/* Background Images */
+.ingredients__backgrounds {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
-.feature-card__icon {
-  width: 32px;
-  height: 32px;
+.ingredients__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 0.8s ease, transform 4s ease-out;
+  pointer-events: none;
+}
+
+.ingredients__bg.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.ingredients__bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(12, 12, 12, 0.7); /* Dark veil so text remains readable */
+}
+
+/* Content */
+.ingredients__content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: var(--container-max);
+  padding: 0 var(--container-padding);
+  text-align: center;
+}
+
+.ingredients__subtitle {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--naka-accent);
+  margin-bottom: var(--space-3xl);
+  opacity: 0.8;
+}
+
+.ingredients__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.ingredients__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.5s ease;
+  opacity: 0.4;
+}
+
+.ingredients__item:hover {
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+.ingredients__list:hover .ingredients__item:not(:hover) {
+  opacity: 0.1;
+  filter: blur(4px);
+}
+
+.ingredients__item-kanji {
+  font-family: var(--font-jp);
+  font-size: 1.2rem;
   color: var(--naka-secondary);
-  transition: color var(--transition-base);
+  margin-bottom: var(--space-xs);
+  letter-spacing: 2px;
 }
 
-.feature-card:hover .feature-card__icon {
-  color: var(--naka-primary);
-}
-
-.feature-card__title {
-  font-size: 1.25rem;
+.ingredients__item-name {
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 8vw, 8rem);
+  font-weight: 400;
+  line-height: 1;
   color: var(--naka-white);
-  margin-bottom: var(--space-sm);
-}
-
-.feature-card__description {
-  color: var(--naka-text-muted);
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-@media (max-width: 1024px) {
-  .features__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  text-transform: uppercase;
 }
 
 @media (max-width: 768px) {
-  .features__grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
+  .ingredients {
+    min-height: 80vh;
   }
-  
-  .feature-card {
-    padding: var(--space-lg);
+  .ingredients__list {
+    gap: var(--space-md);
   }
 }

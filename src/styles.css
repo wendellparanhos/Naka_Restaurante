@@ -11,29 +11,22 @@
 
 /* CSS Custom Properties */
 :root {
-  /* Colors */
-  --naka-primary: #1a1a2e;
-  --naka-primary-light: #16213e;
-  --naka-secondary: #c9a961;
-  --naka-secondary-light: #dfc07f;
-  --naka-secondary-dark: #a88a3e;
-  --naka-accent: #e74c3c;
-  --naka-bg: #0f0f1a;
-  --naka-bg-light: #1a1a2e;
-  --naka-bg-section: #111122;
-  --naka-bg-card: #1e1e35;
-  --naka-text: #f0ece2;
-  --naka-text-muted: #a0a0b8;
-  --naka-text-dark: #2c2c2c;
-  --naka-border: rgba(201, 169, 97, 0.15);
-  --naka-overlay: rgba(10, 10, 26, 0.65);
-  --naka-glass: rgba(26, 26, 46, 0.7);
+  /* Avant-Garde Palette */
+  --naka-bg: #121212; /* Sumi ink black */
+  --naka-bg-light: #1a1a1a;
+  --naka-bg-section: #141414;
+  --naka-primary: #e6e4dc; /* Washi paper */
+  --naka-text: #d4d0c5;
+  --naka-text-muted: #88857d;
+  --naka-accent: #8a1c1c; /* Crimson / Urushi red */
+  --naka-border: rgba(230, 228, 220, 0.1);
+  --naka-glass: rgba(18, 18, 18, 0.5);
   --naka-white: #ffffff;
-  --naka-success: #2ecc71;
 
   /* Typography */
-  --font-heading: 'Montserrat', sans-serif;
-  --font-body: 'Open Sans', sans-serif;
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-jp: 'Noto Serif JP', serif;
 
   /* Spacing (8px grid) */
   --space-xs: 0.5rem;
@@ -81,6 +74,7 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: none; /* Hide default cursor */
 }
 
 body {
@@ -98,9 +92,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  color: var(--naka-secondary);
+  color: var(--naka-primary);
   text-decoration: none;
   transition: color var(--transition-fast);
+  cursor: none;
 }
 
 a:hover {
@@ -115,7 +110,7 @@ img {
 
 button {
   font-family: var(--font-heading);
-  cursor: pointer;
+  cursor: none;
   border: none;
   outline: none;
 }
@@ -271,8 +266,8 @@ ul, ol {
 
 .animate-on-scroll {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(40px);
+  transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .animate-on-scroll.visible {
@@ -280,8 +275,148 @@ ul, ol {
   transform: translateY(0);
 }
 
+/* Modern Browser Scroll Reveal (No JS needed) */
+@supports (animation-timeline: view()) {
+  .naka-section {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 30%;
+  }
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(60px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
 /* Selection */
 ::selection {
-  background: var(--naka-secondary);
-  color: var(--naka-primary);
+  background: var(--naka-primary);
+  color: var(--naka-bg);
+}
+
+/* ======================================
+   ANTIGRAVITY & UX ENHANCEMENTS
+   ====================================== */
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--naka-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--naka-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-pill {
+  background: rgba(26, 26, 46, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 50px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Image Placeholder Fallback (Since AI Generation failed) */
+.image-placeholder {
+  background: linear-gradient(135deg, var(--naka-primary-light) 0%, var(--naka-bg) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.image-placeholder::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  animation: shimmer 2s infinite;
+}
+
+/* Hide scrollbar for clean masonry / scroll areas if needed */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Floating WhatsApp Button */
+.naka-whatsapp-float {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+  z-index: var(--z-whatsapp);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.naka-whatsapp-float:hover {
+  transform: scale(1.1) translateY(-5px);
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .naka-whatsapp-float {
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* ======================================
+   AVANT-GARDE REDESIGN ELEMENTS
+   ====================================== */
+
+/* Noise Overlay */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Custom Cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--naka-accent);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+  mix-blend-mode: difference;
+  transition: width 0.3s, height 0.3s, background-color 0.3s;
+  will-change: transform, width, height;
+}
+
+/* Make custom cursor expand on interactive elements (handled via JS or CSS hover if global) */
+a:hover ~ .custom-cursor,
+button:hover ~ .custom-cursor {
+  width: 50px;
+  height: 50px;
+  background-color: var(--naka-primary);
 }

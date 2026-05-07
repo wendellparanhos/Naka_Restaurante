@@ -1,0 +1,31 @@
+<section id="menu" class="menu naka-section">
+  <div class="naka-container">
+    <div class="menu__header">
+      <h2 class="naka-section-title menu__title">O <span>Cardápio</span></h2>
+      <div class="menu__categories">
+        <button 
+          *ngFor="let cat of categories" 
+          (click)="setCategory(cat)"
+          [class.active]="activeCategory === cat"
+          class="menu__cat-btn">
+          {{ cat }}
+        </button>
+      </div>
+    </div>
+
+    <ul class="menu__list">
+      <li class="menu__list-item"
+          *ngFor="let item of filteredMenuItems"
+          (mouseenter)="onMenuHover(item, $event)"
+          (mouseleave)="onMenuLeave()">
+        <div class="menu__item-name">{{ item.name }}</div>
+        <div class="menu__item-price">{{ item.price }}</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Hover Reveal Image (desktop only) -->
+  <div class="menu__hover-reveal" #hoverReveal>
+    <img [src]="currentHoverImage" alt="Menu Item" *ngIf="currentHoverImage">
+  </div>
+</section>

@@ -1,23 +1,23 @@
-<section id="features" class="features naka-section" #featuresSection>
-  <div class="naka-container">
-    <div class="features__header animate-on-scroll visible">
-      <h2 class="naka-section-title">Por que o <span>Naka</span>?</h2>
-      <div class="naka-divider"></div>
-      <p class="naka-section-subtitle">
-        Cada detalhe do nosso restaurante foi pensado para elevar sua experiência gastronômica a um novo patamar de excelência.
-      </p>
-    </div>
-
-    <div class="features__grid">
-      <div class="feature-card" *ngFor="let feature of features; let i = index" [style.transition-delay]="(i * 0.1) + 's'">
-        <div class="feature-card__icon-wrapper">
-          <svg class="feature-card__icon" viewBox="0 0 24 24" fill="currentColor">
-            <path [attr.d]="feature.icon"></path>
-          </svg>
-        </div>
-        <h3 class="feature-card__title">{{ feature.title }}</h3>
-        <p class="feature-card__description">{{ feature.description }}</p>
-      </div>
+<section id="ingredients" class="ingredients">
+  
+  <div class="ingredients__backgrounds">
+    <div class="ingredients__bg" *ngFor="let item of ingredients" 
+         [class.active]="activeIngredient === item.id"
+         [style.backgroundImage]="'url(' + item.image + ')'">
+      <div class="ingredients__bg-overlay"></div>
     </div>
   </div>
+
+  <div class="ingredients__content">
+    <h3 class="ingredients__subtitle">A Matéria-Prima</h3>
+    <ul class="ingredients__list">
+      <li class="ingredients__item" *ngFor="let item of ingredients"
+          (mouseenter)="setActive(item.id)"
+          (mouseleave)="clearActive()">
+        <span class="ingredients__item-kanji">{{ item.kanji }}</span>
+        <span class="ingredients__item-name">{{ item.name }}</span>
+      </li>
+    </ul>
+  </div>
+
 </section>

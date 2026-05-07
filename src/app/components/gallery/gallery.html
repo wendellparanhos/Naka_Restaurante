@@ -1,30 +1,37 @@
-<section id="gallery" class="gallery naka-section" #gallerySection>
-  <div class="naka-container">
-    <div class="gallery__header">
-      <h2 class="naka-section-title">Nossa <span>Galeria</span></h2>
-      <div class="naka-divider"></div>
-      <p class="naka-section-subtitle">
-        Uma amostra visual da nossa culinária excepcional e do nosso ambiente acolhedor.
-      </p>
-    </div>
+<section id="gallery" class="gallery naka-section">
+  <div class="gallery__header">
+    <h2 class="naka-section-title gallery__title">A <span>Exposição</span></h2>
+  </div>
 
-    <div class="gallery__grid">
-      <div class="gallery__item" *ngFor="let image of images; let i = index" [style.transition-delay]="(i * 0.1) + 's'" (click)="openLightbox(image)">
-        <img [src]="image.src" [alt]="image.alt" loading="lazy" class="gallery__img">
-        <div class="gallery__overlay">
-          <span class="gallery__icon">+</span>
-          <h3 class="gallery__title">{{ image.title }}</h3>
+  <div class="gallery__scroll-container" #scrollContainer>
+    <div class="gallery__track">
+      <!-- 
+        Horizontal scroll layout: items snap to center. 
+        Active item in center is colorful, others are grayscale/faded.
+      -->
+      <div class="gallery__item" 
+           *ngFor="let img of images; let i = index" 
+           [class.active]="activeIndex === i"
+           (click)="openLightbox(i)">
+        <div class="gallery__item-inner">
+          <img [src]="img" [alt]="'Galeria Naka ' + (i+1)">
+          <div class="gallery__caption">Naka / 0{{i + 1}}</div>
         </div>
       </div>
+      <!-- Empty space at the end so the last item can snap to the center -->
+      <div class="gallery__spacer"></div>
     </div>
   </div>
 
-  <!-- Lightbox -->
-  <div class="lightbox" [class.lightbox--active]="lightboxImage" (click)="closeLightbox()">
-    <button class="lightbox__close" aria-label="Close lightbox">&times;</button>
-    <div class="lightbox__content" (click)="$event.stopPropagation()">
-      <img *ngIf="lightboxImage" [src]="lightboxImage.src" [alt]="lightboxImage.alt" class="lightbox__img">
-      <h3 *ngIf="lightboxImage" class="lightbox__title">{{ lightboxImage.title }}</h3>
+  <!-- Fullscreen Lightbox (remains unchanged) -->
+  <div class="gallery__lightbox" [class.open]="isLightboxOpen" (click)="closeLightbox()">
+    <button class="gallery__lightbox-close" (click)="closeLightbox()">FECHAR</button>
+    <div class="gallery__lightbox-content" (click)="$event.stopPropagation()">
+      <img [src]="currentImage" alt="Gallery Zoom">
+      <div class="gallery__lightbox-nav">
+        <button (click)="prevImage()">ANT.</button>
+        <button (click)="nextImage()">PRÓX.</button>
+      </div>
     </div>
   </div>
 </section>
