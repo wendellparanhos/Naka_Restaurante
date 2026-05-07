@@ -37,6 +37,7 @@ export class Menu implements AfterViewInit {
   ];
 
   filteredMenuItems: MenuItem[] = [];
+  activeMobileItem: MenuItem | null = null;
 
   constructor() {
     this.filteredMenuItems = this.allMenuItems;
@@ -56,11 +57,16 @@ export class Menu implements AfterViewInit {
 
   setCategory(cat: string) {
     this.activeCategory = cat;
+    this.activeMobileItem = null; // Reset mobile image when category changes
     if (cat === 'Todos') {
       this.filteredMenuItems = this.allMenuItems;
     } else {
       this.filteredMenuItems = this.allMenuItems.filter(item => item.category === cat);
     }
+  }
+
+  toggleMobileImage(item: MenuItem) {
+    this.activeMobileItem = this.activeMobileItem === item ? null : item;
   }
 
   onMenuHover(item: MenuItem, event: MouseEvent) {
@@ -90,7 +96,16 @@ export class Menu implements AfterViewInit {
     }
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkMobile();
+  }
+
   ngAfterViewInit() {
-    this.isMobile = window.innerWidth <= 768;
+    this.checkMobile();
+  }
+
+  private checkMobile() {
+    this.isMobile = window.innerWidth <= 1024;
   }
 }

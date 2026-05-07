@@ -17,9 +17,17 @@
       <li class="menu__list-item"
           *ngFor="let item of filteredMenuItems"
           (mouseenter)="onMenuHover(item, $event)"
-          (mouseleave)="onMenuLeave()">
-        <div class="menu__item-name">{{ item.name }}</div>
-        <div class="menu__item-price">{{ item.price }}</div>
+          (mouseleave)="onMenuLeave()"
+          (click)="toggleMobileImage(item)">
+        <div class="menu__item-main">
+          <div class="menu__item-name">{{ item.name }}</div>
+          <div class="menu__item-price">{{ item.price }}</div>
+        </div>
+        
+        <!-- Mobile Image Reveal -->
+        <div class="menu__mobile-img" *ngIf="isMobile && activeMobileItem === item">
+          <img [src]="item.image" [alt]="item.name">
+        </div>
       </li>
     </ul>
   </div>

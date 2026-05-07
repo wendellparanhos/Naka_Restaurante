@@ -28,22 +28,10 @@ import { Menu } from './components/menu/menu';
   styleUrl: './app.css',
 })
 export class App implements AfterViewInit {
-  title = 'naka-restaurante';
-  showSplash = true;
-  fadeSplash = false;
-
   @ViewChild('customCursor') customCursor!: ElementRef;
   @ViewChild('scrollProgress') scrollProgress!: ElementRef;
 
   ngAfterViewInit() {
-    // 1. Splash Screen Logic
-    setTimeout(() => {
-      this.fadeSplash = true;
-      setTimeout(() => {
-        this.showSplash = false;
-      }, 800); // Match CSS transition
-    }, 2500);
-
     // 2. Initialize Lenis Smooth Scroll
     const lenis = new Lenis({
       duration: 1.2,
